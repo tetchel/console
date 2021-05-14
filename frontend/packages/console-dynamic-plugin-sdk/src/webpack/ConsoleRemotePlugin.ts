@@ -59,6 +59,8 @@ export class ConsoleRemotePlugin {
         library: { type: remoteEntryLibraryType, name: remoteEntryCallback },
         filename: remoteEntryFile,
         exposes: this.pkg.consolePlugin.exposedModules || {},
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         overridables: sharedVendorModules,
       }).apply(compiler);
       new ConsoleAssetPlugin(this.pkg).apply(compiler);
