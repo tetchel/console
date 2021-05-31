@@ -54,12 +54,14 @@ export class ConsoleRemotePlugin {
 
     // Apply relevant webpack plugins
     compiler.hooks.afterPlugins.tap(ConsoleRemotePlugin.name, () => {
+      new webpack.sharing.SharePlugin({ shared: sharedVendorModules }).apply(compiler);
+
       new webpack.container.ContainerPlugin({
         name: this.pkg.consolePlugin.name,
         library: { type: remoteEntryLibraryType, name: remoteEntryCallback },
         filename: remoteEntryFile,
         exposes: this.pkg.consolePlugin.exposedModules || {},
-        overridables: sharedVendorModules,
+        // overridables: sharedVendorModules,
       }).apply(compiler);
       new ConsoleAssetPlugin(this.pkg).apply(compiler);
     });

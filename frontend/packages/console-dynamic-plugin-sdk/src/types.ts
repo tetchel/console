@@ -67,7 +67,7 @@ export type RemoteEntryModule = {
    * instead of the container-local modules. If an override doesn't exist, all modules
    * of the container will use the container-local module implementation.
    */
-  override: (modules: { [moduleName: string]: () => Promise<() => any> }) => void;
+  init: (modules: { [moduleName: string]: () => Promise<() => any> }) => void;
 };
 
 /**

@@ -65,15 +65,24 @@ const generateSchema = ({ srcFile, typeName, handleConsoleExtensions }: SchemaTy
 
 console.log('Generating Console plugin JSON schemas');
 
+const indentSpaces = 2;
+
 typeConfigs.forEach((tc) => {
   const schema = generateSchema(tc);
-  const schemaString = JSON.stringify(schema, null, 2);
   const outPath = resolvePath(`schema/${path.parse(tc.srcFile).name}`);
 
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
-  fs.writeFileSync(`${outPath}.json`, schemaString);
-  fs.writeFileSync(`${outPath}.js`, `export default ${schemaString};`);
-
+  fs.writeFileSync(`${outPath}.json`, JSON.stringify(schema, undefined, indentSpaces));
   console.log(chalk.green(relativePath(`${outPath}.json`)));
+
+  // using es modules
+  // fs.writeFileSync(`${outPath}.js`, `export default ${schemaString};`);
+
+  // using commonjs modules
+  fs.writeFileSync(
+    `${outPath}.js`,
+    `module.exports = ${JSON.stringify({ default: schema }, undefined, indentSpaces)}`,
+  );
+
   console.log(chalk.green(relativePath(`${outPath}.js`)));
 });

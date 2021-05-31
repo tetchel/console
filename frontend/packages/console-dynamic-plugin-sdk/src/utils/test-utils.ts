@@ -30,7 +30,7 @@ export const getEntryModuleMocks = (requestedModule: {}): [
 
   const entryModule = {
     get: jest.fn(async () => moduleFactory),
-    override: jest.fn<void>(),
+    init: jest.fn<void>(),
   };
 
   return [moduleFactory, entryModule];

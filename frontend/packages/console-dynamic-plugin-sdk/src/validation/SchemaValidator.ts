@@ -1,6 +1,8 @@
-import * as Ajv from 'ajv';
 import { ValidationResult } from './ValidationResult';
 import { ValidationAssertions } from './ValidationAssertions';
+
+// eslint-disable-next-line
+const Ajv = require("ajv");
 
 export class SchemaValidator {
   readonly result: ValidationResult;

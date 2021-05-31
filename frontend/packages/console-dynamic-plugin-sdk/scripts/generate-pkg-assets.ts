@@ -11,14 +11,13 @@ const createPackageJson = (packagePath: string) => {
   delete packageJson.private;
   packageJson.license = 'Apache-2.0';
   packageJson.main = 'lib/extensions/index.js';
-  packageJson.exports = {
-    '.': './lib/extensions/index.js',
-    './webpack': './lib/webpack/ConsoleRemotePlugin.js',
-    './api': './lib/api/api.js',
-  };
+  // packageJson.exports = {
+  //   '.': './lib/extensions/index.js',
+  //   './lib/webpack': './lib/webpack/index.js',
+  //   './api': './lib/api/api.js',
+  // };
   packageJson.readme = 'README.md';
-  packageJson.peerDependencies = _.pick(packageJson.devDependencies, 'webpack');
-  delete packageJson.dependencies;
+  packageJson.dependencies = _.pick(packageJson.devDependencies, 'comment-json', 'webpack');
   delete packageJson.devDependencies;
   delete packageJson.scripts;
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));

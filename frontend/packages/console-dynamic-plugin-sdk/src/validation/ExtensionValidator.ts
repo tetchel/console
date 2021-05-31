@@ -31,10 +31,16 @@ export const findWebpackModules = (
   const webpackModules = Array.from(compilation.modules);
 
   return Object.keys(exposedModules).reduce((acc, moduleName) => {
-    acc[moduleName] = webpackModules.find((m) => {
+    const match = webpackModules.find((m) => {
       const rawRequest = _.get(m, 'rawRequest') || _.get(m, 'rootModule.rawRequest');
       return exposedModules[moduleName] === rawRequest;
     });
+
+    if (match) {
+      console.log(`Resolved module "${moduleName}"`);
+      acc[moduleName] = match;
+    }
+
     return acc;
   }, {} as { [moduleName: string]: webpack.Module });
 };
@@ -75,15 +81,18 @@ export class ExtensionValidator {
         const [moduleName, exportName] = parseEncodedCodeRefValue(codeRefValue);
         const errorTrace = `in ${dataVar}[${data.index}] property '${propName}'`;
 
+        console.log(`module "${moduleName}" export "${exportName}"`);
+
         if (!moduleName || !exportName) {
           this.result.addError(`Invalid code reference '${codeRefValue}' ${errorTrace}`);
           return;
         }
 
         const foundModule = webpackModules[moduleName];
+        // console.log(`List of modules: ${JSON.stringify(webpackModules)}`);
 
         if (!foundModule) {
-          this.result.addError(`Invalid module '${moduleName}' ${errorTrace}`);
+          this.result.addError(`Could not resolve module '${moduleName}' ${errorTrace}`);
           return;
         }
 

@@ -32,7 +32,9 @@ const WDS_PORT = 8080;
 const extractCSS = new MiniCssExtractPlugin({ filename: 'app-bundle.[contenthash].css' });
 const virtualModules = new VirtualModulesPlugin();
 const overpassTest = /overpass-.*\.(woff2?|ttf|eot|otf)(\?.*$|$)/;
-const sharedVendorTest = new RegExp(`node_modules\\/(${sharedVendorModules.join('|')})\\/`);
+const sharedVendorTest = new RegExp(
+  `node_modules\\/(${Object.keys(sharedVendorModules).join('|')})\\/`,
+);
 
 const config: Configuration = {
   entry: [
