@@ -62,6 +62,7 @@ export class ConsoleAssetPlugin {
     };
 
     compiler.hooks.afterCompile.tap(ConsoleAssetPlugin.name, (compilation) => {
+      console.log(`Exposed modules are: ${JSON.stringify(this.pkg.consolePlugin.exposedModules)}`);
       const result = new ExtensionValidator(extensionsFile).validate(
         compilation,
         this.manifest.extensions,

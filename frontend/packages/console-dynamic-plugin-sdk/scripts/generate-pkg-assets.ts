@@ -7,18 +7,18 @@ import { resolvePath, relativePath } from './utils/path';
 
 const createPackageJson = (packagePath: string) => {
   const packageJson = readPkg.sync({ normalize: false });
-  packageJson.name = '@openshift-console/dynamic-plugin-sdk';
+  packageJson.name = '@tetchel/dynamic-plugin-sdk';
   delete packageJson.private;
   packageJson.license = 'Apache-2.0';
   packageJson.main = 'lib/extensions/index.js';
-  packageJson.exports = {
-    '.': './lib/extensions/index.js',
-    './webpack': './lib/webpack/ConsoleRemotePlugin.js',
-    './api': './lib/api/api.js',
-  };
+  // packageJson.exports = {
+  // '.': './lib/extensions/index.js',
+  // './webpack': './lib/webpack/ConsoleRemotePlugin.js',
+  // './api': './lib/api/api.js',
+  // };
   packageJson.readme = 'README.md';
-  packageJson.peerDependencies = _.pick(packageJson.devDependencies, 'webpack');
-  delete packageJson.dependencies;
+  packageJson.dependencies = _.pick(packageJson.devDependencies, 'webpack', 'comment-json');
+  // delete packageJson.dependencies;
   delete packageJson.devDependencies;
   delete packageJson.scripts;
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));

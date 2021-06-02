@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "target": "es2016",
     "declaration": true,
@@ -8,7 +8,8 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "noUnusedLocals": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
   },
   "files": ["src/webpack/ConsoleRemotePlugin.ts", "src/extensions/index.ts", "src/api/api.ts"]
 }
